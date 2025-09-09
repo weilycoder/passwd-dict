@@ -9,7 +9,13 @@
 	"compatibility_date": "2025-09-09",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"kv_namespaces": [
+		{
+			"binding": "PASSWD_DICT",
+			"id": "c28df1f27e844e97af3926e679ddc9d0"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
