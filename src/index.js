@@ -1,63 +1,63 @@
 export default {
-	async fetch(request, env) {
-		const url = new URL(request.url);
-		const path = url.pathname;
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const path = url.pathname;
 
-		// Root path - password submission form
-		if (path === '/' || path === '/index.html') {
-			return handleRoot(request, env);
-		}
+    // Root path - password submission form
+    if (path === '/' || path === '/index.html') {
+      return handleRoot(request, env);
+    }
 
-		// View password dictionary
-		if (path === '/dict' || path === '/dict/') {
-			return handleDict(env);
-		}
+    // View password dictionary
+    if (path === '/dict' || path === '/dict/') {
+      return handleDict(env);
+    }
 
-		// Download password dictionary
-		if (path === '/install' || path === '/install/') {
-			return handleInstall(env);
-		}
+    // Download password dictionary
+    if (path === '/install' || path === '/install/') {
+      return handleInstall(env);
+    }
 
-		// Delete password
-		if (path.startsWith('/delete/')) {
-			const passwdToDelete = decodeURIComponent(path.split('/delete/')[1]);
-			return handleDelete(request, env, passwdToDelete);
-		}
+    // Delete password
+    if (path.startsWith('/delete/')) {
+      const passwdToDelete = decodeURIComponent(path.split('/delete/')[1]);
+      return handleDelete(request, env, passwdToDelete);
+    }
 
-		return new Response('Not Found', { status: 404 });
-	}
+    return new Response('Not Found', { status: 404 });
+  }
 };
 
 // Handle root path request
 async function handleRoot(request, env) {
-	let message = '';
+  let message = '';
 
-	// Process form submission
-	if (request.method === 'POST') {
-		const formData = await request.formData();
-		const newPassword = formData.get('password')?.trim();
+  // Process form submission
+  if (request.method === 'POST') {
+    const formData = await request.formData();
+    const newPassword = formData.get('password')?.trim();
 
-		if (newPassword) {
-			// Get current password list
-			let passwords = await getPasswords(env);
+    if (newPassword) {
+      // Get current password list
+      let passwords = await getPasswords(env);
 
-			// Add new password (avoid duplicates)
-			if (!passwords.includes(newPassword)) {
-				passwords.push(newPassword);
-				await savePasswords(env, passwords);
-				message = `<div class="success">Password added successfully!</div>`;
-			} else {
-				message = `<div class="error">Password already exists!</div>`;
-			}
-		} else {
-			message = `<div class="error">Please enter a valid password!</div>`;
-		}
-	}
+      // Add new password (avoid duplicates)
+      if (!passwords.includes(newPassword)) {
+        passwords.push(newPassword);
+        await savePasswords(env, passwords);
+        message = `<div class="success">Password added successfully!</div>`;
+      } else {
+        message = `<div class="error">Password already exists!</div>`;
+      }
+    } else {
+      message = `<div class="error">Please enter a valid password!</div>`;
+    }
+  }
 
-	// Get current password list for display
-	const passwords = await getPasswords(env);
+  // Get current password list for display
+  const passwords = await getPasswords(env);
 
-	return new Response(`
+  return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,14 +102,14 @@ async function handleRoot(request, env) {
 </body>
 </html>
   `, {
-		headers: { 'Content-Type': 'text/html; charset=UTF-8' }
-	});
+    headers: { 'Content-Type': 'text/html; charset=UTF-8' }
+  });
 }
 
 // Display password dictionary
 async function handleDict(env) {
-	const passwords = await getPasswords(env);
-	return new Response(`
+  const passwords = await getPasswords(env);
+  return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,28 +130,28 @@ async function handleDict(env) {
 </body>
 </html>
   `, {
-		headers: { 'Content-Type': 'text/html; charset=UTF-8' }
-	});
+    headers: { 'Content-Type': 'text/html; charset=UTF-8' }
+  });
 }
 
 // Download password dictionary
 async function handleInstall(env) {
-	const passwords = await getPasswords(env);
-	return new Response(passwords.join('\n'), {
-		headers: {
-			'Content-Type': 'text/plain; charset=UTF-8',
-			'Content-Disposition': 'attachment; filename="password-dictionary.txt"'
-		}
-	});
+  const passwords = await getPasswords(env);
+  return new Response(passwords.join('\n'), {
+    headers: {
+      'Content-Type': 'text/plain; charset=UTF-8',
+      'Content-Disposition': 'attachment; filename="password-dictionary.txt"'
+    }
+  });
 }
 
 // Handle password deletion
 async function handleDelete(request, env, passwdToDelete) {
-	let passwords = await getPasswords(env);
+  let passwords = await getPasswords(env);
 
-	// Check if password exists
-	if (!passwords.includes(passwdToDelete)) {
-		return new Response(`
+  // Check if password exists
+  if (!passwords.includes(passwdToDelete)) {
+    return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -170,32 +170,32 @@ async function handleDelete(request, env, passwdToDelete) {
 </body>
 </html>
     `, {
-			headers: { 'Content-Type': 'text/html; charset=UTF-8' },
+      headers: { 'Content-Type': 'text/html; charset=UTF-8' },
       status: 404,
-		});
-	}
+    });
+  }
 
-	let message = '';
+  let message = '';
 
-	// Process verification password submission
-	if (request.method === 'POST') {
-		const formData = await request.formData();
-		const verification = formData.get('verification');
+  // Process verification password submission
+  if (request.method === 'POST') {
+    const formData = await request.formData();
+    const verification = formData.get('verification');
 
-		// Calculate SHA512 hash
-		const encoder = new TextEncoder();
-		const data = encoder.encode(verification);
-		const hashBuffer = await crypto.subtle.digest('SHA-512', data);
-		const hashArray = Array.from(new Uint8Array(hashBuffer));
-		const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-		const delete_passwd_hash = await env.PASSWD_DICT.get('delete-passwd');
+    // Calculate SHA512 hash
+    const encoder = new TextEncoder();
+    const data = encoder.encode(verification);
+    const hashBuffer = await crypto.subtle.digest('SHA-512', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const delete_passwd_hash = await env.PASSWD_DICT.get('delete-passwd');
 
-		// Verify password
-		if (hashHex === delete_passwd_hash) {
-			// Delete password
-			passwords = passwords.filter(p => p !== passwdToDelete);
-			await savePasswords(env, passwords);
-			return new Response(`
+    // Verify password
+    if (hashHex === delete_passwd_hash) {
+      // Delete password
+      passwords = passwords.filter(p => p !== passwdToDelete);
+      await savePasswords(env, passwords);
+      return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -214,15 +214,15 @@ async function handleDelete(request, env, passwdToDelete) {
 </body>
 </html>
       `, {
-				headers: { 'Content-Type': 'text/html; charset=UTF-8' }
-			});
-		} else {
-			message = `<div class="error">Verification password incorrect!</div>`;
-		}
-	}
+        headers: { 'Content-Type': 'text/html; charset=UTF-8' }
+      });
+    } else {
+      message = `<div class="error">Verification password incorrect!</div>`;
+    }
+  }
 
-	// Show verification form
-	return new Response(`
+  // Show verification form
+  return new Response(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -247,25 +247,25 @@ async function handleDelete(request, env, passwdToDelete) {
 </body>
 </html>
   `, {
-		headers: { 'Content-Type': 'text/html; charset=UTF-8' },
+    headers: { 'Content-Type': 'text/html; charset=UTF-8' },
     status: 403,
-	});
+  });
 }
 
 // Get password list
 async function getPasswords(env) {
-	const data = await env.PASSWD_DICT.get('data');
-	return data ? JSON.parse(data) : [];
+  const data = await env.PASSWD_DICT.get('data');
+  return data ? JSON.parse(data) : [];
 }
 
 // Save password list
 async function savePasswords(env, passwords) {
-	await env.PASSWD_DICT.put('data', JSON.stringify(passwords));
+  await env.PASSWD_DICT.put('data', JSON.stringify(passwords));
 }
 
 // Get common CSS styles
 function getCommonCSS() {
-	return `
+  return `
     * {
       box-sizing: border-box;
       margin: 0;
@@ -374,12 +374,12 @@ function getCommonCSS() {
 
 // Prevent XSS attacks with HTML escaping
 function escapeHTML(str) {
-	return str.replace(/[&<>"']/g,
-		tag => ({
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			"'": '&#39;'
-		}[tag]));
+  return str.replace(/[&<>"']/g,
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[tag]));
 }
