@@ -83,7 +83,7 @@ export async function handleDelete(request, env, passwdToDelete) {
 </html>
   `, {
     headers: { 'Content-Type': 'text/html; charset=UTF-8' },
-    status: 403,
+    status: 200,
   });
 }
 
