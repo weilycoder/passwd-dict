@@ -62,5 +62,5 @@ ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec
 接下来，可以使用以下命令将删除口令设为 `123456`：
 
 ```bash
-npx wrangler kv key put --binding=PASSWD_DICT "delete-passwd" "0627a34645f3e942ac20586b3bb890450406e8913abb8a998c53d42ab1937d1e243950df7e564bd016e1e8254c88ba56b898b434bd0f680ed3eae31f40509643"
+npx wrangler kv key put --binding=PASSWD_DICT "delete-passwd" "0627a34645f3e942ac20586b3bb890450406e8913abb8a998c53d42ab1937d1e243950df7e564bd016e1e8254c88ba56b898b434bd0f680ed3eae31f40509643" --remote
 ```
