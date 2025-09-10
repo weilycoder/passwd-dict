@@ -6,7 +6,7 @@ export async function handleDict(env) {
   const passwords = await getPasswords(env);
   return new Response(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Password Dictionary</title>

@@ -32,7 +32,7 @@ export async function handleDelete(request, env, passwdToDelete) {
       await savePasswords(env, passwords);
       return new Response(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Deletion Successful</title>
@@ -59,7 +59,7 @@ export async function handleDelete(request, env, passwdToDelete) {
   // Show verification form
   return new Response(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Delete Password</title>
@@ -90,7 +90,7 @@ export async function handleDelete(request, env, passwdToDelete) {
 async function handleNotFound() {
   return new Response(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Error</title>

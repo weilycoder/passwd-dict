@@ -32,7 +32,7 @@ export async function handleRoot(request, env) {
 
   return new Response(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Password Dictionary Manager</title>
