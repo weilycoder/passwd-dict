@@ -1,3 +1,4 @@
+import { handleIcon } from './icon.js';
 import { handleRoot } from './root.js';
 import { handleDelete } from './delete.js';
 import { handleDict, handleInstall } from './show.js';
@@ -26,6 +27,10 @@ export default {
     if (path.startsWith('/delete/')) {
       const passwdToDelete = decodeURIComponent(path.split('/delete/')[1]);
       return handleDelete(request, env, passwdToDelete);
+    }
+
+    if (path === '/favicon.ico') {
+      return handleIcon();
     }
 
     return new Response('Not Found', { status: 404 });
