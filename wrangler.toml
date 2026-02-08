@@ -1,0 +1,7 @@
+name = "passwd-dict"
+main = "src/index.js"
+compatibility_date = "2026-02-08"
+
+[[kv_namespaces]]
+binding = "PASSWD_DICT"
+id = "c28df1f27e844e97af3926e679ddc9d0"
