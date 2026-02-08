@@ -6,7 +6,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "JetBrains Mono", Tahoma, Geneva, Verdana;
 }
 
 body {
@@ -73,6 +73,8 @@ button,
 
 .delete-btn {
     background: #e74c3c;
+    padding: 4px 10px;
+    font-size: 14px;
 }
 
 .btn:hover,
@@ -106,7 +108,7 @@ button:hover {
     max-height: 320px;
     overflow-y: auto;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 5px 10px;
     border-radius: 4px;
     background: #f9f9f9;
 }
@@ -115,8 +117,8 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 6px 0;
+    gap: 8px;
+    padding: 4px 0;
     border-bottom: 1px dashed #e3e3e3;
 }
 
