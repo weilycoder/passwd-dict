@@ -29,13 +29,32 @@
       id = "<your_kv_namespace_id>"
       ```
 
+    - 如果需要在命令行创建 KV 命名空间，可以使用以下命令：
+
+        ```bash
+        wrangler kv namespace create PASSWD_DICT
+        ```
+
+        将返回如下格式的信息：
+
+        ```
+        {
+          "kv_namespaces": [
+            {
+              "binding": "PASSWD_DICT",
+              "id": "<BINDING_ID>"
+            }
+          ]
+        }
+        ```
+
 4. 设置删除密码：
 
     - 应用希望任何人都可以添加条目，而删除条目需要密码保护。
     - 使用
   
         ```bash
-        npx wrangler kv key put delete-passwd <your_delete_password> --binding=PASSWD_DICT
+        wrangler kv key put delete-passwd <your_delete_password> --binding=PASSWD_DICT
         ```
 
         将删除密码存储在 KV 命名空间中。
