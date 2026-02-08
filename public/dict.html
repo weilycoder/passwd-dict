@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Dictionary</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Password Dictionary</h1>
+        <p class="muted">Read-only list from the API.</p>
+        <div id="notice" class="notice"></div>
+
+        <div class="password-content" id="dict-list"></div>
+        <p class="muted">Total: <span id="dict-count">0</span> items</p>
+
+        <div class="nav">
+            <a href="/" class="btn">Back to Home</a>
+            <a href="/api/install" class="btn">Download Dictionary</a>
+        </div>
+    </div>
+
+    <script src="/dict.js"></script>
+</body>
+
+</html>

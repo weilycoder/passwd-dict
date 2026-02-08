@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Dictionary Manager</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Password Dictionary Manager</h1>
+        <p class="muted">Manage your weak-password list through the API-backed UI.</p>
+        <div id="notice" class="notice"></div>
+
+        <form id="add-form">
+            <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="text" id="password" name="password" required>
+            </div>
+            <button type="submit">Add Password</button>
+        </form>
+
+        <div class="password-list" id="password-list"></div>
+        <p class="muted">Total: <span id="password-count">0</span> items</p>
+
+        <div class="nav">
+            <a href="/dict.html" class="btn">View Dictionary</a>
+            <a href="/api/install" class="btn">Download Dictionary</a>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-modal-close></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+            <h2 id="delete-title">Confirm Delete</h2>
+            <p class="muted" id="delete-target"></p>
+            <div class="form-group">
+                <label for="verification">Verification Password</label>
+                <input type="password" id="verification" name="verification" autocomplete="current-password">
+            </div>
+            <div class="inline-actions">
+                <button type="button" class="delete-btn" id="confirm-delete">Delete</button>
+                <button type="button" class="btn" data-modal-close>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>
